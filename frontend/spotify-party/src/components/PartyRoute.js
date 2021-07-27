@@ -125,6 +125,10 @@ function PartyRoute({setId, auth, partyMembers, setPartyMembers, setDrawerOpen, 
                 setPartyData("undefined");
                 return;
             }
+            if(!data.owner) {
+                setPartyData("invalid");
+                return;
+            }
             setPartyData(data);
             isMemberOfParty(firestore, id).then(value => {
                 setIsMember(value);
@@ -310,8 +314,9 @@ function PartyRoute({setId, auth, partyMembers, setPartyMembers, setDrawerOpen, 
 
     return (
     partyData === "waiting" ? <Background><Loading></Loading></Background> :
-    partyData === "undefined" ? <InfoPage title="Group Not Found" subtitle=""></InfoPage> :
-    partyData === "deleted" ? <InfoPage title="Your Group Was Deleted" subtitle="The group owner must have left."></InfoPage> : 
+    partyData === "undefined" ? <InfoPage title="Party Not Found" subtitle=""></InfoPage> :
+    partyData === "invalid" ? <InfoPage title="This Party Is Invalid" subtitle="Everything is wrong with this party and it should not exist. How did you even find this, anyways?"></InfoPage> : 
+    partyData === "deleted" ? <InfoPage title="Your Party Was Deleted" subtitle="The party owner must have left."></InfoPage> : 
     isMember === null ? <Background><Loading></Loading></Background> : 
     <div>
         {isMember ? <div>
