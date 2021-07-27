@@ -75,7 +75,7 @@ function PartyRoute({setId, auth, partyMembers, setPartyMembers, setDrawerOpen, 
     }
 
     const invalidParty = () => {
-        if(partyData === "undefined" || partyData === "deleted" || partyData === "waiting") return partyData;
+        if(partyData === "undefined" || partyData === "deleted" || partyData === "waiting" || partyData === "invalid") return partyData;
         return false;
     }
 
