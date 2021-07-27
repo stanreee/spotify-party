@@ -1,0 +1,33 @@
+if the user is playing a song AND that song is at the top of the queue saved on the database, then
+remove that song from the queue on the database, and queue up the next song
+
+
+so say the database has the following songs on queue:
+
+    Vacation
+    SoulMate
+    Call Me
+
+and the user (host of the group) is currently playing Vacation (check by comparing track URIs), then remove Vacation from the queue on the database
+
+    SoulMate
+    Call Me
+
+then send a request to spotify api to queue up SoulMate, meaning the next song played will be SoulMate and this would continue
+
+this has a problem, there's no way for me to automatically check what the user is currently playing
+
+plus this method is too convoluted and confusing
+
+
+OR
+
+any song that is entered on the website is just simply queued to the owner's spotify
+
+problem is, there's no way for me to tell whether a song has finished playing or not
+
+
+
+OR
+
+just screw it all and instead just have queue history (have toasts whenever a member of the group queues a song)

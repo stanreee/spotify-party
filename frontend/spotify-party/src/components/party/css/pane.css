@@ -1,0 +1,26 @@
+.slide-pane__overlay.overlay-after-open {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.slide-pane__overlay {
+    display: grid;
+    place-items: center;
+}
+
+.slide-pane__header {
+    border-bottom: none;
+    background-color: white;
+}
+
+.slide-pane {
+    background-color: white;
+}
+
+.slide-pane_from_bottom {
+    height: 80vh;
+    margin-top: 20vh;
+}
+
+.slide-pane__content {
+    padding: 24px 24px;
+}

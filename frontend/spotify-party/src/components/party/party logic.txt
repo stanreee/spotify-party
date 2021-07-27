@@ -1,0 +1,6 @@
+in firebase, we'll have a document for each party.
+
+the document's name is the unique party id
+
+the document contains the spotify id of the host, an array of spotify id's that are
+the members of the group, and an array of spotify track IDs that are queued up.
