@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { queueSong, getSongDataArray, isLoggedInToSpotify, getCurrentPlayingSongData, skipSong } from '../api/spotify.js';
+import { queueSong, getSongDataArray, isLoggedInToSpotify, getCurrentPlayingSongData, skipSong, getSongData } from '../api/spotify.js';
 import styled from 'styled-components';
 import { theme, GenericBackground, Title, Button, QueueInputField } from '../styles/globals';
 import HeaderBar from './party/HeaderBar.js';
@@ -61,17 +61,21 @@ function PartyRoute({setId, auth, partyMembers, setPartyMembers, setDrawerOpen, 
         const partiesRef = firestore.collection('parties');
         const doc = await partiesRef.doc(`${id}`);
 
-        const songObject = {
-            url: songURI,
-            queued: false,
-            queuedBy: localStorage.getItem(id + "-display"),
-            queuedAt: Date.now(),
-            uuid: uuidv4()
-        }
+        return getSongData(songURI).then((data) => {
+            const songObject = {
+                url: songURI,
+                queued: false,
+                queuedBy: localStorage.getItem(id + "-display"),
+                queuedAt: Date.now(),
+                uuid: uuidv4()
+            }
 
-        doc.update({
-            queue: firebase.firestore.FieldValue.arrayUnion(songObject)
-        })
+            doc.update({
+                queue: firebase.firestore.FieldValue.arrayUnion(songObject)
+            })
+        }, (error) => {
+            return Promise.reject("Error getting song data from Spotify.");
+        });
     }
 
     const invalidParty = () => {

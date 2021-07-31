@@ -100,17 +100,23 @@ const QueueInputDiv = styled.div`
 export const QueueInputField = (width="100%", songURI, setSongURI, mediaPredicate, toast, handleClick) => <QueueInputDiv>
 <InputField value={songURI} onChange={(e) => setSongURI(e.target.value)} fontSize={mediaPredicate ? "18px" : "24px"} height="75px" width={width} onBlur={(e) => e.target.placeholder = 'Copy a Spotify track link and paste it here!'} onFocus={(e) => e.target.placeholder = ''} placeholder="Copy a Spotify track link and paste it here!"></InputField>
 <Button onClick={async () => { 
-    const regExp = /^https:\/\/open.spotify.com\/track\/[a-z0-9A-Z]+\?si=[a-z0-9A-Z]*$/;
+    const regExp = /^https:\/\/open.spotify.com\/track\/[a-z0-9A-Z]+\?si=[a-z0-9A-Z]*&*.*$/;
     if(!regExp.test(songURI)) {
         toast.error("Invalid URL.", {
             position: "bottom-center",
         });
         return;
     }
-    await handleClick();
-    toast.success("Queued!", {
-        position: "bottom-center"
+    handleClick().then((result) => {
+        toast.success("Queued!", {
+            position: "bottom-center"
+        });
+    }).catch(err => {
+        toast.error("No Spotify song found from URL.", {
+            position: "bottom-center"
+        })
     });
+    
     setSongURI("");
     }} borderRadius="0px" marginLeft="12px" height="65px" fontSize={mediaPredicate ? "18px" : "24px"} width="20%">Queue</Button>
 </QueueInputDiv>;

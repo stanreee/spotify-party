@@ -34,7 +34,7 @@ async function request(url, expectingResponse) {
     if(response.status >= 400 && response.status < 600) {
         console.error("bad server reseponse: " + response.status);
         console.error(response.statusText);
-        return;
+        throw Error("bad response");
     }
 
     if(expectingResponse) {
@@ -111,9 +111,15 @@ export const getSongData = async (songURL) => {
 
     const url = buildURL("/api/songData?song_uri=" + songURI, true);
 
-    var handledData = await request(url, true);
+    // var handledData = await request(url, true);
 
-    return handledData;
+    // return handledData;
+
+    return request(url, true).then((data) => {
+        return data;
+    }, (error) => {
+        return Promise.reject("Error finding song data");
+    })
 }
 
 export const getSongDataArray = async (songURLArray) => {
