@@ -226,8 +226,6 @@ function CurrentlyPlaying({showAlbum, queue, setQueueData, auth, canSkip, votesN
         checkVoted();
 
         if(currentlyPlaying) {
-            console.log(currentlyPlaying);
-            console.log("changing background color");
             setBackgroundColor(getRandomColor());
         }
     }, [currentlyPlaying])
