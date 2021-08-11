@@ -13,20 +13,16 @@ import { createGlobalStyle } from "styled-components";
 const Wrapper = styled.div`
     width: 100%;
     height: 100%;
-    background-color: ${theme.blackColor};
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(${(props) => `${props.img}`});
+    background-color: ${(props) => props.showAlbum ? theme.blackColor : (props.currentlyPlaying ? props.bgColor : theme.blackColor)};
+    background-image: url(${(props) => props.showAlbum && `${props.img}`});
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
     background-position: 50% 75%;
 
     display: grid;
     place-items: center;
 
     transition: all ease 0.5s;
-
-    :hover {
-        background-position: 50.5% 75.5%;
-    }
 `;
 
 const LocalStyle = createGlobalStyle`
@@ -98,6 +94,10 @@ const LocalStyle = createGlobalStyle`
 `;
 
 const InnerContent = styled.div`
+
+    opacity: ${props => props.showAlbum ? "0%" : "100%"};
+
+    transition: all ease 0.5s;
 
     display: ${props => props.owner ? "flex" : "grid"};
     flex-direction: column;
@@ -192,7 +192,7 @@ const Box = styled.div`
     cursor: pointer;
 `;
 
-function CurrentlyPlaying({queue, setQueueData, auth, canSkip, votesNeeded, firebase, firestore, partyMembers, id, skipVotes, currentlyPlaying}) {
+function CurrentlyPlaying({showAlbum, queue, setQueueData, auth, canSkip, votesNeeded, firebase, firestore, partyMembers, id, skipVotes, currentlyPlaying}) {
 
     const [voted, setVoted] = useState(false);
     const [owner, setOwner] = useState(false);
@@ -201,7 +201,15 @@ function CurrentlyPlaying({queue, setQueueData, auth, canSkip, votesNeeded, fire
 
     const ref = firestore.collection('parties').doc(`${id}`);
 
+    const [backgroundColor, setBackgroundColor] = useState(undefined);
+
     const classes = useStyles();
+
+    function getRandomColor() {
+        const colours = [theme.darkBlueColor, theme.greenColor, theme.orangeColor, theme.pinkColor, theme.purpleColor]
+        const random = colours[Math.floor(Math.random() * colours.length)];
+        return random;
+    }
 
     useEffect(() => {
         const checkVoted = async () => {
@@ -216,6 +224,12 @@ function CurrentlyPlaying({queue, setQueueData, auth, canSkip, votesNeeded, fire
         }
 
         checkVoted();
+
+        if(currentlyPlaying) {
+            console.log(currentlyPlaying);
+            console.log("changing background color");
+            setBackgroundColor(getRandomColor());
+        }
     }, [currentlyPlaying])
 
     // need to figure out how to reset vote counter when new song plays
@@ -261,9 +275,9 @@ function CurrentlyPlaying({queue, setQueueData, auth, canSkip, votesNeeded, fire
     </div>
 
     return (
-        currentlyPlaying ? <Wrapper img={currentlyPlaying.img}>
+        currentlyPlaying ? <Wrapper showAlbum={showAlbum} currentlyPlaying={true} bgColor={backgroundColor} img={currentlyPlaying.img}>
             <LocalStyle />
-            <InnerContent owner={owner}>
+            <InnerContent showAlbum={showAlbum} owner={owner}>
                 {owner && MaterialSwitch}
                 <div style={{margin: "auto"}}>
                     <div style={{display: "grid", placeItems: "center"}}>
@@ -272,7 +286,7 @@ function CurrentlyPlaying({queue, setQueueData, auth, canSkip, votesNeeded, fire
                         <h3>{getArtists(currentlyPlaying.artists)}</h3>
                         <div style={{display: canSkip ? "flex" : "grid", placeItems: canSkip ? "" : "center", width: "100%", marginTop: "10px", marginBottom: "15px"}}>
                             {canSkip && <Button cursor="pointer" onClick={() => addVote()} borderRadius={"1px"} hoverColor={theme.whiteColor} borderColor={theme.blackColor} style={{marginRight: "5px"}} fontHoverColor={theme.blackColor} fontColor={theme.whiteColor} color={voted ? theme.blueColor : "rgba(0, 0, 0, 0)"} fontSize={theme.font3} width="50%" height="40px">{voted ? "VOTED" : "VOTE SKIP"}</Button>}
-                            <Button cursor="pointer" onClick={() => setOpen(true)} borderRadius={"1px"} hoverColor={theme.greenColor} borderColor={theme.blackColor} style={{marginLeft: "5px"}} fontHoverColor={theme.whiteColor} fontColor={theme.blackColor} color="rgb(255, 255, 255)" fontSize={theme.font3} width="50%" height="40px">VIEW QUEUE HISTORY</Button>
+                            <Button cursor="pointer" onClick={() => setOpen(true)} borderRadius={"1px"} hoverColor={backgroundColor} borderColor={theme.blackColor} style={{marginLeft: "5px"}} fontHoverColor={theme.whiteColor} fontColor={theme.blackColor} color="rgb(255, 255, 255)" fontSize={theme.font3} width="50%" height="40px">VIEW QUEUE HISTORY</Button>
                         </div>
                     </div>
                     {canSkip ? <h4>{skipVotes} votes ({votesNeeded + " vote(s) needed to skip"})</h4> : <h4>Skipping has been disabled by the group owner.</h4>}
@@ -294,7 +308,7 @@ function CurrentlyPlaying({queue, setQueueData, auth, canSkip, votesNeeded, fire
                 </BoxWrapper>
             </InnerContent>
         </Wrapper> : 
-        <Wrapper>
+        <Wrapper currentlyPlaying={false}>
             <LocalStyle />
             <InnerContent owner={owner}>
                 {owner && MaterialSwitch}

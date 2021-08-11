@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Drawer as MUIDrawer, List, ListItem, ListItemText, makeStyles } from '@material-ui/core';
+import { FormGroup, FormControlLabel, Switch, Drawer as MUIDrawer, List, ListItem, ListItemText, makeStyles } from '@material-ui/core';
 
 import { withStyles } from '@material-ui/styles';
 import styled from 'styled-components';
@@ -9,6 +9,8 @@ import { theme } from '../styles/globals';
 
 import { useHistory } from 'react-router';
 import { deleteUser } from '../api/FirebaseFunctions';
+
+import { toast, ToastContainer } from 'react-toastify';
 
 const StyledItemText = withStyles({ 
     primary: {
@@ -20,6 +22,13 @@ const StyledItemText = withStyles({
 const useStyles = makeStyles({
     paper: {
         background: theme.blackColor
+    },
+    switch: {
+        "& .MuiTypography-root": {
+            color: theme.whiteColor,
+            fontFamily: "CircularStd",
+            fontSize: theme.font3
+        },
     }
 })
 
@@ -48,7 +57,7 @@ const Members = styled.div`
     }
 `;
 
-function Drawer({id, firebase, firestore, groupMembers, setOpen, open}) {
+function Drawer({setShowAlbum, showAlbum, id, firebase, firestore, groupMembers, setOpen, open}) {
 
     const classes = useStyles();
 
@@ -66,11 +75,21 @@ function Drawer({id, firebase, firestore, groupMembers, setOpen, open}) {
 
     return (
         <MUIDrawer classes={{paper: classes.paper}} variant="temporary" width={400} onClose={() => handleClose()} open={open}>
+            <ToastContainer></ToastContainer>
             <div style={{height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
                 <div style={{flex: 3}}>
                     <List>
                         <ListItem button key={"Leave Group"}>
                             <ListItemText onClick={() => goHome()} primary={"Leave Group"}></ListItemText>
+                        </ListItem>
+                        <ListItem button key={"Toggle HUD"}>
+                            <FormGroup style={{marginLeft: "8px"}}>
+                                <FormControlLabel
+                                    className={classes.switch}
+                                    control={<Switch color={theme.greenColor} checked={showAlbum} onChange={() => {setShowAlbum(!showAlbum)}} />}
+                                    label="Show Album Image"
+                                />
+                            </FormGroup>
                         </ListItem>
                     </List>
                 </div>

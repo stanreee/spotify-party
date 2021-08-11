@@ -36,7 +36,7 @@ const Background = styled(GenericBackground)`
         place-items: center;
 `;
 
-function PartyRoute({setId, auth, partyMembers, setPartyMembers, setDrawerOpen, drawerOpen, firebase, firestore}) {
+function PartyRoute({showAlbum, setId, auth, partyMembers, setPartyMembers, setDrawerOpen, drawerOpen, firebase, firestore}) {
 
     const [songURI, setSongURI] = useState(null);
     const [queue, setQueueData] = useState(null);
@@ -324,10 +324,10 @@ function PartyRoute({setId, auth, partyMembers, setPartyMembers, setDrawerOpen, 
     isMember === null ? <Background><Loading></Loading></Background> : 
     <div>
         {isMember ? <div>
-            <HeaderBar setDrawerOpen={setDrawerOpen} drawerOpen={drawerOpen}>{partyData.name}</HeaderBar>
+            <HeaderBar showAlbum={showAlbum} setDrawerOpen={setDrawerOpen} drawerOpen={drawerOpen}>{partyData.name}</HeaderBar>
         {isLoggedInToSpotify() ? 
         <Body className="body">
-            <CurrentlyPlaying queue={queue} setQueueData={setQueueData} auth={auth} votesNeeded={neededVotes} setCanSkip={setCanSkip} canSkip={canSkip} partyMembers={partyMembers} currentlyPlaying={currentlyPlaying} firebase={firebase} firestore={firestore} id={id} skipVotes={skipVotes} partyMembers={partyMembers}></CurrentlyPlaying>
+            <CurrentlyPlaying showAlbum={showAlbum} queue={queue} setQueueData={setQueueData} auth={auth} votesNeeded={neededVotes} setCanSkip={setCanSkip} canSkip={canSkip} partyMembers={partyMembers} currentlyPlaying={currentlyPlaying} firebase={firebase} firestore={firestore} id={id} skipVotes={skipVotes} partyMembers={partyMembers}></CurrentlyPlaying>
             <QueueASong setSongURI={setSongURI} songURI={songURI} handleClick={handleClick} playlistHref={playlistHref} setPlaylistHref={setPlaylistHref} playlistName={playlistName} setPlaylistName={setPlaylistName}></QueueASong>
             <ToastContainer></ToastContainer>
 

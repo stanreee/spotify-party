@@ -140,6 +140,8 @@ function App() {
   const [open, setOpen] = useState(false);
   const [partyMembers, setPartyMembers] = useState([]);
 
+  const [showAlbum, setShowAlbum] = useState(false);
+
   const history = useHistory();
 
   const Background = styled(GenericBackground)`
@@ -159,8 +161,8 @@ function App() {
           </React.Fragment>
           <Switch>
             <Route path="/group/:id">
-              <Drawer id={id} firebase={firebase} firestore={firestore} groupMembers={partyMembers} history={history} setOpen={setOpen} open={open}></Drawer>
-              <PartyRoute setId={setId} auth={auth} partyMembers={partyMembers} setPartyMembers={setPartyMembers} setDrawerOpen={setOpen} drawerOpen={open} firebase={firebase} firestore={firestore}></PartyRoute>
+              <Drawer id={id} setShowAlbum={setShowAlbum} showAlbum={showAlbum} firebase={firebase} firestore={firestore} groupMembers={partyMembers} history={history} setOpen={setOpen} open={open}></Drawer>
+              <PartyRoute showAlbum={showAlbum} setId={setId} auth={auth} partyMembers={partyMembers} setPartyMembers={setPartyMembers} setDrawerOpen={setOpen} drawerOpen={open} firebase={firebase} firestore={firestore}></PartyRoute>
             </Route>
             <Route exact path="/" children={<HomeRoute></HomeRoute>}></Route>
             <Route path="/create" children={<CreateGroup auth={auth} firestore={firestore}></CreateGroup>}></Route>

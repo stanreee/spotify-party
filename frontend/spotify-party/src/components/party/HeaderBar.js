@@ -8,7 +8,8 @@ const Wrapper = styled.div`
     position: absolute;
     height: 6vh;
     width: 100%;
-    background-color: rgba(78, 204, 163, 0);
+    /* background-color: rgba(78, 204, 163, 0); */
+    background-color: rgba(33, 33, 33, 0);
     margin: auto;
 
     h1 {
@@ -16,6 +17,8 @@ const Wrapper = styled.div`
         color: ${theme.whiteColor};
         font-size: ${theme.font6};
         top: 50%;
+        opacity: ${props => props.showAlbum ? "0%" : "100%"};
+        transition: all ease 0.5s;
     }
 
     @media only screen and (max-width: 768px) {
@@ -37,7 +40,7 @@ const DrawerButton = styled.img`
 
 function HeaderBar(props) {
     return (
-        <Wrapper>
+        <Wrapper showAlbum={props.showAlbum}>
             <div>
                 <DrawerButton src={button} onClick={() => props.setDrawerOpen(!props.drawerOpen)}></DrawerButton>
             </div>
