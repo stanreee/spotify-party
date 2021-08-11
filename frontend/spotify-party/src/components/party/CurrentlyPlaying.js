@@ -17,7 +17,7 @@ const Wrapper = styled.div`
     background-image: url(${(props) => props.showAlbum && `${props.img}`});
     background-repeat: no-repeat;
     background-size: contain;
-    background-position: 50% 75%;
+    background-position: 50% 50%;
 
     display: grid;
     place-items: center;
