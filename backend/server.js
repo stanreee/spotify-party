@@ -44,6 +44,7 @@ app.get("/callback", (req, res) => {
         return;
     }
     res.send("no code given");
+    console.log("test", process.env.redirect_uri);
 })
 
 async function refreshAccessToken(res, refreshToken) {

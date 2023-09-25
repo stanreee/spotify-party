@@ -1,4 +1,4 @@
-const api_url = process.env.NODE_ENV === "production" ? "https://partify-it.herokuapp.com" : "http://localhost:4000"
+const api_url = process.env.NODE_ENV === "production" ? process.env.SERVER_URL : "http://localhost:4000"
 
 /*
 Build URL for frontend to request data from backend.
