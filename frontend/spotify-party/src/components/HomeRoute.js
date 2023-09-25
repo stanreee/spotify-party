@@ -40,7 +40,7 @@ function HomeRoute() {
 
     const history = useHistory();
 
-    const redirect = process.env.NODE_ENV === "production" ? process.env.SERVER_URL : "http://localhost:4000/login"
+    const redirect = process.env.NODE_ENV === "production" ? process.env.SERVER_URL + "/login" : "http://localhost:4000/login"
 
     const login = () => {
         window.location.href = redirect;
