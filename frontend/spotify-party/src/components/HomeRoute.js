@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { isLoggedInToSpotify } from "../api/spotify";
 
 import github from "./GitHub-Mark.png";
+import constants from "../constants/constants";
 
 const ButtonsDiv = styled.div`
     display: flex;
@@ -40,7 +41,7 @@ function HomeRoute() {
 
     const history = useHistory();
 
-    const redirect = process.env.NODE_ENV === "production" ? process.env.SERVER_URL + "/login" : "http://localhost:4000/login"
+    const redirect = process.env.NODE_ENV === "production" ? constants.SERVER_URL + "/login" : "http://localhost:4000/login"
 
     const login = () => {
         window.location.href = redirect;

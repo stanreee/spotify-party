@@ -18,14 +18,16 @@ import { useHistory } from 'react-router';
 import { styled } from '@material-ui/core';
 import Loading from './components/Loading.js';
 
+import constants from './constants/constants.js';
+
 if(!firebase.apps.length) {
   firebase.initializeApp({
-    apiKey: `${process.env.REACT_APP_API_KEY}`,
-    authDomain: `${process.env.REACT_APP_AUTH_DOMAIN}`,
-    projectId: `${process.env.REACT_APP_PROJECT_ID}`,
-    storageBucket: `${process.env.REACT_APP_STORAGE_BUCKET}`,
-    messagingSenderId: `${process.env.REACT_APP_MESSAGING_SENDER_ID}`,
-    appId: `${process.env.REACT_APP_APP_ID}`
+    apiKey: `${constants.REACT_APP_API_KEY}`,
+    authDomain: `${constants.REACT_APP_AUTH_DOMAIN}`,
+    projectId: `${constants.REACT_APP_PROJECT_ID}`,
+    storageBucket: `${constants.REACT_APP_STORAGE_BUCKET}`,
+    messagingSenderId: `${constants.REACT_APP_MESSAGING_SENDER_ID}`,
+    appId: `${constants.REACT_APP_APP_ID}`
   })
 }else{
   firebase.app();

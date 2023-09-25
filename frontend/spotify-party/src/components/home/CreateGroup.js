@@ -22,6 +22,7 @@ import { makeStyles, withStyles } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import { useMediaPredicate } from 'react-media-hook';
+import constants from '../../constants/constants.js';
 
 const ColumnDiv = styled.div`
     display: flex;
@@ -74,7 +75,7 @@ const BiggerTooltip = withStyles({
     }
 })(Tooltip)
 
-const redirect = process.env.NODE_ENV === "production" ? process.env.SERVER_URL + "/login" : "http://localhost:4000/login"
+const redirect = process.env.NODE_ENV === "production" ? constants.SERVER_URL + "/login" : "http://localhost:4000/login"
 
 function CreateGroup({auth, firestore}) {
 

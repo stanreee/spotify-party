@@ -1,4 +1,6 @@
-const api_url = process.env.NODE_ENV === "production" ? process.env.SERVER_URL : "http://localhost:4000"
+import constants from "../constants/constants";
+
+const api_url = process.env.NODE_ENV === "production" ? constants.SERVER_URL : "http://localhost:4000"
 
 /*
 Build URL for frontend to request data from backend.
