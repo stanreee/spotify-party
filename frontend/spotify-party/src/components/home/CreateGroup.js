@@ -74,7 +74,7 @@ const BiggerTooltip = withStyles({
     }
 })(Tooltip)
 
-const redirect = process.env.NODE_ENV === "production" ? "https://partify-it.herokuapp.com/login" : "http://localhost:4000/login"
+const redirect = process.env.NODE_ENV === "production" ? process.env.SERVER_URL : "http://localhost:4000/login"
 
 function CreateGroup({auth, firestore}) {
 
