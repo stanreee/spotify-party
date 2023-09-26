@@ -1,2 +1,5 @@
-/*    /index.html   200
+/    /index.html   200
+/create    /index.html    200
+/join    /index.html    200
+/group    /index.html    200
 /api/*    http://ec2-3-138-60-82.us-east-2.compute.amazonaws.com:4000/:splat   200!
