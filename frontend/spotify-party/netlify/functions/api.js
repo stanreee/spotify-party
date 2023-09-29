@@ -141,7 +141,7 @@ router.get('/api/queueSong', async (req, res) => {
     }).catch((error) => {
         console.log(error.response);
         res.status(error.response.status);
-        res.send(error.response.status + " - an error occurred.");
+        res.send(error.response.status + " - an error occurred. the user is most likely not a spotify premium user.");
     })
 })
 
