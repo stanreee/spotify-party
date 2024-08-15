@@ -4,4 +4,4 @@ A web app that allows users to create Spotify 'parties', or join other user crea
 Developed with Firebase, ReactJS, NodeJS, Express, and the Spotify Web API.
 Deployed on Netlify with Netlify Functions.
 
-Can be found at https://partify-it.netlify.com/
+Can be found at https://partify-it.netlify.app/
